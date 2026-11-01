@@ -23,6 +23,10 @@ Tuya's website changes its menus from time to time, so labels may differ a littl
      devices don't show up.
 3. On the next screen, keep the suggested API services, especially **IoT Core** and
    **Authorization Token Management**, and click **Authorize**.
+4. Subscribe to IoT Core: open **Cloud → Cloud Services**, find **IoT Core**, and start the free
+   **Trial Edition** ($0). Then check the project's **Service API** tab lists both IoT Core and
+   Authorization Token Management; if not, use **Go to Authorize** to add them. Without this the
+   dashboard shows "IoT Core service is not subscribed".
 
 ## 3. Link your Smart Life app
 
