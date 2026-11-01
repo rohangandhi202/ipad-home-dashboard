@@ -20,16 +20,16 @@ dashboard told them to do.
 
 ## Phases
 
-| # | Phase | Who | Done when |
-|---|---|---|---|
-| 0 | Accounts: Cloudflare, Govee API key, Tuya developer account, Voice Monkey skill | You | Keys saved somewhere private |
-| 1 | Repo and design A dashboard: aurora, clock, weather, tiles, scenes (demo mode) | Claude | Opens full-screen from the iPad Home Screen |
-| 2 | Cloudflare Worker and Govee ([setup](setup/cloud-helper.md)) | Claude, then you add the key | Desk/TV lights toggle and show live state |
-| 3 | Tuya: Smart Life lamp and the three plugs | Claude, then you link Smart Life | Same as phase 2 |
-| 4 | Alexa bridge: Fire TV power, apps, HDMI 2 | Claude writes the routine checklist; you create the routines | Each button fires its routine |
-| 5 | Surplife lamp Shortcuts | You build them; Claude wires the tile | The lamp responds from the dashboard |
-| 6 | Scenes run in the Worker (one request per scene) | Claude | Every scene sets all its devices |
-| 7 | Kiosk: Guided Access, Auto-Lock off, charger on a plug cycling 30–80%, night dimming | You | iPad stays on and protects its battery |
+| # | Phase | Who | Done when | Status |
+|---|---|---|---|---|
+| 0 | Accounts: Cloudflare, Govee API key, Tuya developer account, Voice Monkey skill | You | Keys saved somewhere private | |
+| 1 | Repo and design A dashboard: aurora, clock, weather, tiles, scenes (demo mode) | Claude | Opens full-screen from the iPad Home Screen | Done |
+| 2 | Cloudflare Worker and Govee ([setup](setup/cloud-helper.md)) | Claude, then you add the key | Desk/TV lights toggle and show live state | Done |
+| 3 | Tuya: Smart Life lamp and the three plugs ([setup](setup/tuya.md)) | Claude, then you link Smart Life | Same as phase 2 | |
+| 4 | Alexa bridge: Fire TV power, apps, HDMI 2 | Claude writes the routine checklist; you create the routines | Each button fires its routine | |
+| 5 | Surplife lamp Shortcuts | You build them; Claude wires the tile | The lamp responds from the dashboard | |
+| 6 | Scenes run in the Worker (one request per scene) | Claude | Every scene sets all its devices | |
+| 7 | Kiosk: Guided Access, Auto-Lock off, charger on a plug cycling 30–80%, night dimming | You | iPad stays on and protects its battery | |
 
 ## Scenes
 
