@@ -29,7 +29,7 @@ export default {
     { id: 'plug-counter', name: 'Counter', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     {
       id: 'fire-tv', name: 'Fire TV', type: 'tv', icon: 'ti-device-tv', via: 'alexa',
-      voiceMonkey: { on: null, off: null },
+      voiceMonkey: { on: 'dashboard-tv-on-jmsta', off: 'dashboard-tv-off-cgv46' },
     },
   ],
 
@@ -38,7 +38,7 @@ export default {
   tv: {
     apps: [],
     inputs: [
-      { id: 'ps5', name: 'PS5', input: 'HDMI 2', icon: 'ti-device-gamepad-2', voiceMonkey: null },
+      { id: 'ps5', name: 'PS5', input: 'HDMI 2', icon: 'ti-device-gamepad-2', voiceMonkey: 'dashboard-ps5-qr4n8' },
     ],
   },
 
