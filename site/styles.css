@@ -208,7 +208,7 @@ button {
   grid-auto-rows: minmax(112px, 1fr);
   gap: var(--gap);
 }
-.tv .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tv .tiles { grid-template-columns: minmax(0, 1fr); }
 
 .tile {
   position: relative;
@@ -336,3 +336,5 @@ button {
   .top { flex-direction: column; align-items: flex-start; }
   .top-right { align-items: flex-start; }
 }
+
+[hidden] { display: none !important; }

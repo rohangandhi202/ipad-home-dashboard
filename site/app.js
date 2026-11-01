@@ -113,8 +113,10 @@ function render() {
     </button>`);
   $('tv-tiles').innerHTML = [...tvTiles, ...inputTiles].join('');
 
+  // No app buttons on Voice Monkey's free plan; the section hides itself when the list is empty.
   $('tv-apps').innerHTML = config.tv.apps
     .map((app) => `<button class="app" data-app="${app.id}">${app.name}</button>`).join('');
+  $('tv-apps').hidden = $('tv-apps-title').hidden = config.tv.apps.length === 0;
 
   updateTiles();
 }

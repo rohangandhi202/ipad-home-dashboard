@@ -15,3 +15,4 @@ id = "e73bf4a9a7d74cc1958790174c0eabcb"
 #   DASHBOARD_TOKEN  the access code typed into the dashboard's settings
 #   GOVEE_API_KEY    from the Govee Home app
 #   TUYA_ACCESS_ID, TUYA_ACCESS_SECRET   from the Tuya cloud project (docs/setup/tuya.md)
+#   VOICE_MONKEY_TOKEN   from app.voicemonkey.io/tokens (docs/setup/alexa.md)

@@ -12,7 +12,8 @@ export default {
   // via: how the cloud helper reaches the device.
   //   govee    - Govee API (live on/off state)
   //   tuya     - Smart Life / Tuya cloud API (live on/off state)
-  //   alexa    - Voice Monkey -> Alexa routine (no state; shows the last thing the dashboard did)
+  //   alexa    - Voice Monkey -> Alexa routine (no state; shows the last thing the dashboard did).
+  //              `voiceMonkey` holds the Routine Trigger device IDs from app.voicemonkey.io.
   //   shortcut - Siri Shortcut run on the iPad itself (no state)
   // goveeName / tuyaName: the device's name in the Govee or Smart Life app, when it differs from `name`.
   devices: [
@@ -26,25 +27,24 @@ export default {
     { id: 'plug-tv-stand', name: 'TV Stand', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     { id: 'plug-desk', name: 'Desk', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     { id: 'plug-counter', name: 'Counter', type: 'plug', icon: 'ti-plug', via: 'tuya' },
-    { id: 'fire-tv', name: 'Fire TV', type: 'tv', icon: 'ti-device-tv', via: 'alexa' },
+    {
+      id: 'fire-tv', name: 'Fire TV', type: 'tv', icon: 'ti-device-tv', via: 'alexa',
+      voiceMonkey: { on: null, off: null },
+    },
   ],
 
+  // Voice Monkey's free plan allows 3 Routine Triggers (TV on, TV off, PS5) and 200 uses a month.
+  // On a paid plan, app buttons can come back: add { id, name, voiceMonkey } entries to `apps`.
   tv: {
-    apps: [
-      { id: 'netflix', name: 'Netflix' },
-      { id: 'youtube', name: 'YouTube' },
-      { id: 'hulu', name: 'Hulu' },
-      { id: 'prime-video', name: 'Prime Video' },
-      { id: 'spotify', name: 'Spotify' },
-      { id: 'apple-tv', name: 'Apple TV' },
-    ],
+    apps: [],
     inputs: [
-      { id: 'ps5', name: 'PS5', input: 'HDMI 2', icon: 'ti-device-gamepad-2' },
+      { id: 'ps5', name: 'PS5', input: 'HDMI 2', icon: 'ti-device-gamepad-2', voiceMonkey: null },
     ],
   },
 
   // `set` targets, from weakest to strongest: '*' (every device), 'lights' / 'plugs' (by type),
-  // then a device id. `tv` optionally opens an app or switches input after the devices are set.
+  // then a device id. `tv` optionally opens an app or switches input; its Alexa routine is expected
+  // to turn the TV on too, so the scene doesn't spend a second Voice Monkey use on "TV on".
   scenes: [
     { id: 'leaving', name: 'Leaving', icon: 'ti-door-exit', set: { '*': 'off', 'plug-tv-stand': 'on' } },
     {

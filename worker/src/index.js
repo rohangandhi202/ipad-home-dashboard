@@ -8,11 +8,11 @@
 
 import config from '../../site/home-config.js';
 import { resolveScene } from '../../site/scenes.js';
+import * as alexa from './alexa.js';
 import * as govee from './govee.js';
 import * as tuya from './tuya.js';
 
-// Filled in as each phase lands: alexa (phase 4).
-const providers = { govee, tuya };
+const providers = { alexa, govee, tuya };
 
 const deviceById = new Map(config.devices.map((d) => [d.id, d]));
 
@@ -52,14 +52,18 @@ async function setDevice(env, id, body) {
 
 async function runScene(env, sceneId) {
   if (!config.scenes.some((s) => s.id === sceneId)) throw new HttpError(404, `Unknown scene: ${sceneId}`);
-  const { targets } = resolveScene(config, sceneId);
+  const { targets, tv } = resolveScene(config, sceneId);
   const failed = [];
   const skipped = [];
+
+  const tvTask = tv && runTv(env, tv).catch((err) => failed.push({ id: 'fire-tv', error: err.message }));
 
   await Promise.all(Object.entries(targets).map(async ([id, on]) => {
     const device = deviceById.get(id);
     // Shortcut devices are run by the iPad itself.
     if (device.via === 'shortcut') return;
+    // The scene's TV routine turns the TV on itself; don't spend a second Voice Monkey use on it.
+    if (tv && device.type === 'tv' && on) return;
     const provider = providers[device.via];
     if (!provider) return skipped.push(id);
     try {
@@ -68,8 +72,17 @@ async function runScene(env, sceneId) {
       failed.push({ id, error: err.message });
     }
   }));
-  // The TV part of a scene (app or input) arrives with the Alexa bridge in phase 4.
+  await tvTask;
   return { failed, skipped };
+}
+
+// Opens an app or switches input on the Fire TV through its Alexa routine.
+async function runTv(env, body) {
+  const choice = body?.app
+    ? config.tv.apps.find((a) => a.id === body.app)
+    : config.tv.inputs.find((i) => i.id === body?.input);
+  if (!choice) throw new HttpError(400, 'Send { "app": id } or { "input": id } from home-config.js');
+  await alexa.trigger(env, choice.voiceMonkey, choice.name);
 }
 
 async function route(request, env) {
@@ -84,7 +97,7 @@ async function route(request, env) {
   match = pathname.match(/^\/scenes\/([\w-]+)$/);
   if (request.method === 'POST' && match) return runScene(env, match[1]);
 
-  if (request.method === 'POST' && pathname === '/tv') throw new HttpError(501, "The Fire TV isn't connected yet");
+  if (request.method === 'POST' && pathname === '/tv') return runTv(env, body);
 
   throw new HttpError(404, 'Not found');
 }

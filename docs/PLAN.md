@@ -11,8 +11,8 @@ iPad (Home Screen web app, served by GitHub Pages)
  └─ Cloudflare Worker (free) .............. holds every key, reports device state
      ├─ Govee API ......................... desk light, TV light (live state)
      ├─ Tuya cloud API .................... Smart Life lamp, TV Stand / Desk / Counter plugs (live state)
-     └─ Voice Monkey -> Alexa routines .... Fire TV power, apps (Netflix, YouTube, Hulu, Prime Video,
-                                            Spotify, Apple TV), HDMI 2 for the PS5 (no state)
+     └─ Voice Monkey -> Alexa routines .... Fire TV on/off, HDMI 2 for the PS5 (no state;
+                                            free plan: 3 triggers, 200 uses a month)
 ```
 
 Alexa can't report device state to outside apps, so Alexa-only devices show the last thing the
@@ -26,7 +26,7 @@ dashboard told them to do.
 | 1 | Repo and design A dashboard: aurora, clock, weather, tiles, scenes (demo mode) | Claude | Opens full-screen from the iPad Home Screen | Done |
 | 2 | Cloudflare Worker and Govee ([setup](setup/cloud-helper.md)) | Claude, then you add the key | Desk/TV lights toggle and show live state | Done |
 | 3 | Tuya: Smart Life lamp and the three plugs ([setup](setup/tuya.md)) | Claude, then you link Smart Life | Same as phase 2 | Done |
-| 4 | Alexa bridge: Fire TV power, apps, HDMI 2 | Claude writes the routine checklist; you create the routines | Each button fires its routine | |
+| 4 | Alexa bridge: TV on, TV off, PS5 on HDMI 2 ([setup](setup/alexa.md)) | Claude writes the routine checklist; you create the routines | Each button fires its routine | |
 | 5 | Surplife lamp Shortcuts | You build them; Claude wires the tile | The lamp responds from the dashboard | |
 | 6 | Scenes run in the Worker (one request per scene) | Claude | Every scene sets all its devices | |
 | 7 | Kiosk: Guided Access, Auto-Lock off, charger on a plug cycling 30–80%, night dimming | You | iPad stays on and protects its battery | |
