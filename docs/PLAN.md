@@ -11,7 +11,8 @@ iPad (Home Screen web app, served by GitHub Pages)
  └─ Cloudflare Worker (free) .............. holds every key, reports device state
      ├─ Govee API ......................... desk light, TV light (live state)
      ├─ Tuya cloud API .................... Smart Life lamp, TV Stand / Desk / Counter plugs (live state)
-     └─ Voice Monkey -> Alexa routines .... Fire TV power, apps, HDMI 2 for the PS5 (no state)
+     └─ Voice Monkey -> Alexa routines .... Fire TV power, apps (Netflix, YouTube, Hulu, Prime Video,
+                                            Spotify, Apple TV), HDMI 2 for the PS5 (no state)
 ```
 
 Alexa can't report device state to outside apps, so Alexa-only devices show the last thing the
@@ -37,8 +38,7 @@ Defined in [`site/home-config.js`](../site/home-config.js); edit there.
 | Scene | Does |
 |---|---|
 | Leaving | Everything off except the TV Stand plug |
-| Bed | All lights and the TV off, Desk plug on (TV Stand and Counter plugs left as they are) |
-| Movie | TV light on, desk light off, lamp on, Fire TV on and open Netflix |
+| Bed | All lights, the TV and the Counter plug off, Desk plug on (TV Stand plug left as it is) |
 | Gaming | TV light on, lamp on, Fire TV on and switch to HDMI 2 (PS5) |
 | Vacation | Everything off |
 | All on | Every light and plug on |

@@ -31,6 +31,7 @@ export default {
   tv: {
     apps: [
       { id: 'netflix', name: 'Netflix' },
+      { id: 'youtube', name: 'YouTube' },
       { id: 'hulu', name: 'Hulu' },
       { id: 'prime-video', name: 'Prime Video' },
       { id: 'spotify', name: 'Spotify' },
@@ -45,11 +46,9 @@ export default {
   // then a device id. `tv` optionally opens an app or switches input after the devices are set.
   scenes: [
     { id: 'leaving', name: 'Leaving', icon: 'ti-door-exit', set: { '*': 'off', 'plug-tv-stand': 'on' } },
-    { id: 'bed', name: 'Bed', icon: 'ti-bed', set: { lights: 'off', 'fire-tv': 'off', 'plug-desk': 'on' } },
     {
-      id: 'movie', name: 'Movie', icon: 'ti-movie',
-      set: { 'tv-light': 'on', 'desk-light': 'off', lamp: 'on', 'fire-tv': 'on' },
-      tv: { app: 'netflix' },
+      id: 'bed', name: 'Bed', icon: 'ti-bed',
+      set: { lights: 'off', 'fire-tv': 'off', 'plug-desk': 'on', 'plug-counter': 'off' },
     },
     {
       id: 'gaming', name: 'Gaming', icon: 'ti-device-gamepad-2',
