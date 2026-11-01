@@ -30,6 +30,7 @@ function hasLiveState(device) {
 }
 
 // A device with only a toggle Shortcut can't be told "on" or "off", so it has no state at all.
+// (The sunset lamp's Shortcut just opens Surplife so it can be switched there.)
 function isToggleOnly(device) {
   return Boolean(device.shortcuts?.toggle);
 }
@@ -130,7 +131,7 @@ function updateTiles() {
   for (const tile of document.querySelectorAll('.tile[data-id]')) {
     const id = tile.dataset.id;
     if (isToggleOnly(deviceById.get(id))) {
-      tile.querySelector('.tile-state').textContent = 'Tap to switch';
+      tile.querySelector('.tile-state').textContent = 'Opens Surplife';
       continue;
     }
     const on = state.on[id];

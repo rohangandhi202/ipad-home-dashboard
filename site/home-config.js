@@ -23,8 +23,9 @@ export default {
     { id: 'tv-light', name: 'TV light', type: 'light', icon: 'ti-device-tv', via: 'govee' },
     { id: 'lamp', name: 'Lamp', type: 'light', icon: 'ti-lamp', via: 'tuya' },
     {
-      // Surplife only offers a "Quick Switch" toggle for Bluetooth lamps, so the dashboard can't
-      // know whether it's on, and scenes leave it alone rather than risk switching it the wrong way.
+      // Surplife's Shortcuts action doesn't work with this Bluetooth lamp, so the "Sunset Lamp"
+      // Shortcut opens Surplife for a few seconds to switch it by hand, then returns here.
+      // The dashboard can't know whether it's on, so scenes leave it alone.
       id: 'sunset', name: 'Sunset lamp', type: 'light', icon: 'ti-sunset-2', via: 'shortcut',
       shortcuts: { toggle: 'Sunset Lamp' },
       scenes: false,
