@@ -33,7 +33,8 @@ async function getState(env) {
   const devices = {};
   await Promise.all(config.devices.map(async (device) => {
     const provider = providers[device.via];
-    if (!provider?.getState) return;
+    // Hidden devices (the iPad charger) aren't on screen, so don't spend API calls checking them.
+    if (!provider?.getState || device.hidden) return;
     try {
       devices[device.id] = { on: await provider.getState(env, device) };
     } catch (err) {

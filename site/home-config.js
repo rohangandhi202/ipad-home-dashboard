@@ -17,6 +17,7 @@ export default {
   //   shortcut - Siri Shortcut run on the iPad itself (no state). `shortcuts` names either an
   //              on/off pair or a single `toggle`.
   // scenes: false keeps a device out of every scene.
+  // hidden: true leaves it off the dashboard and out of status checks (it's still controllable).
   // goveeName / tuyaName: the device's name in the Govee or Smart Life app, when it differs from `name`.
   devices: [
     { id: 'desk-light', name: 'Desk light', type: 'light', icon: 'ti-bulb', via: 'govee', goveeName: 'Desk Lights' },
@@ -33,6 +34,12 @@ export default {
     { id: 'plug-tv-stand', name: 'TV Stand', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     { id: 'plug-desk', name: 'Desk', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     { id: 'plug-counter', name: 'Counter', type: 'plug', icon: 'ti-plug', via: 'tuya' },
+    {
+      // Powers the iPad's charger. iPad Shortcuts automations switch it off at 80% battery and on
+      // at 30% (docs/setup/kiosk.md); it never appears on the dashboard.
+      id: 'ipad-charger', name: 'iPad Charger', type: 'plug', icon: 'ti-plug', via: 'govee',
+      hidden: true, scenes: false,
+    },
     {
       id: 'fire-tv', name: 'Fire TV', type: 'tv', icon: 'ti-device-tv', via: 'alexa',
       voiceMonkey: { on: 'dashboard-tv-on-jmsta', off: 'dashboard-tv-off-cgv46' },

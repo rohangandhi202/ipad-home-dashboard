@@ -9,7 +9,7 @@ iPad (Home Screen web app, served by GitHub Pages)
  ├─ Open-Meteo ............................ weather (free, no key)
  ├─ shortcuts://run-shortcut .............. Surplife sunset lamp (Shortcut opens Surplife, then returns)
  └─ Cloudflare Worker (free) .............. holds every key, reports device state
-     ├─ Govee API ......................... desk light, TV light (live state)
+     ├─ Govee API ......................... desk light, TV light (live state), hidden iPad charger plug
      ├─ Tuya cloud API .................... Smart Life lamp, TV Stand / Desk / Counter plugs (live state)
      └─ Voice Monkey -> Alexa routines .... Fire TV on/off, HDMI 2 for the PS5 (no state;
                                             free plan: 3 triggers, 200 uses a month)
@@ -29,7 +29,7 @@ dashboard told them to do.
 | 4 | Alexa bridge: TV on, TV off, PS5 on HDMI 2 ([setup](setup/alexa.md)) | Claude writes the routine checklist; you create the routines | Each button fires its routine | Done |
 | 5 | Surplife lamp Shortcut ([setup](setup/surplife.md)) | You build it; Claude wires the tile | Tile opens Surplife and returns | Done |
 | 6 | Scenes run in the Worker (one request per scene) | Claude | Every scene sets all its devices | Done |
-| 7 | Kiosk: Guided Access, Auto-Lock off, charger on a plug cycling 30–80%, night dimming | You | iPad stays on and protects its battery | |
+| 7 | Kiosk: Auto-Lock off, Govee charger plug cycling 30–80%, night dimming ([setup](setup/kiosk.md)) | You | iPad stays on and protects its battery | |
 
 ## Scenes
 

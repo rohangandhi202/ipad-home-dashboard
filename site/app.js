@@ -3,6 +3,7 @@ import { resolveScene } from './scenes.js';
 
 const $ = (id) => document.getElementById(id);
 const deviceById = new Map(config.devices.map((d) => [d.id, d]));
+const shownDevices = config.devices.filter((d) => !d.hidden);
 
 // Devices that can't report their own state (Alexa, Shortcuts) remember what we last told them.
 const LAST_SET_KEY = 'lastSet';
@@ -105,10 +106,10 @@ function render() {
       <i class="ti ${s.icon}" aria-hidden="true"></i>${s.name}
     </button>`).join('');
 
-  $('lights').innerHTML = config.devices.filter((d) => d.type === 'light').map(tileHtml).join('');
-  $('plugs').innerHTML = config.devices.filter((d) => d.type === 'plug').map(tileHtml).join('');
+  $('lights').innerHTML = shownDevices.filter((d) => d.type === 'light').map(tileHtml).join('');
+  $('plugs').innerHTML = shownDevices.filter((d) => d.type === 'plug').map(tileHtml).join('');
 
-  const tvTiles = config.devices.filter((d) => d.type === 'tv').map(tileHtml);
+  const tvTiles = shownDevices.filter((d) => d.type === 'tv').map(tileHtml);
   const inputTiles = config.tv.inputs.map((input) => `
     <button class="tile" data-input="${input.id}">
       <i class="ti ${input.icon}" aria-hidden="true"></i>
