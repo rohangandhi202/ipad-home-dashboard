@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Home">
+  <meta name="theme-color" content="#0b0d12">
+  <title>Home</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-512.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <main class="dashboard">
+    <header class="top">
+      <button class="clock" id="clock" aria-label="Clock. Press and hold for settings">
+        <span class="time"><span id="time">--:--</span><span class="ampm" id="ampm"></span></span>
+        <span class="date" id="date"></span>
+      </button>
+      <div class="top-right">
+        <div class="weather" id="weather" aria-live="polite">
+          <i class="ti ti-cloud" id="weather-icon" aria-hidden="true"></i>
+          <span class="temp" id="weather-temp">--°</span>
+          <span class="weather-detail">
+            <span id="weather-text">Loading weather</span>
+            <span id="weather-range"></span>
+          </span>
+        </div>
+        <span class="status" id="status"></span>
+      </div>
+    </header>
+
+    <nav class="scenes" id="scenes" aria-label="Scenes"></nav>
+
+    <div class="panels">
+      <section class="panel" aria-labelledby="lights-title">
+        <h2 id="lights-title">Lights</h2>
+        <div class="tiles" id="lights"></div>
+        <h2>Plugs</h2>
+        <div class="tiles" id="plugs"></div>
+      </section>
+
+      <section class="panel tv" aria-labelledby="tv-title">
+        <h2 id="tv-title">Entertainment</h2>
+        <div class="tiles" id="tv-tiles"></div>
+        <h3>Open on Fire TV</h3>
+        <div class="apps" id="tv-apps"></div>
+      </section>
+    </div>
+  </main>
+
+  <div class="night" id="night" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <dialog class="settings" id="settings">
+    <form method="dialog">
+      <h2>Settings</h2>
+      <p class="hint">Leave these blank to stay in demo mode. They're saved only on this iPad.</p>
+      <label>Cloud helper URL
+        <input type="url" id="setting-url" placeholder="https://home-dashboard.yourname.workers.dev" autocomplete="off">
+      </label>
+      <label>Access code
+        <input type="password" id="setting-token" autocomplete="off">
+      </label>
+      <div class="settings-actions">
+        <button value="cancel" class="ghost">Cancel</button>
+        <button value="save" id="setting-save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
