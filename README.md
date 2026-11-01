@@ -14,6 +14,8 @@ See [docs/PLAN.md](docs/PLAN.md) for the full plan and progress.
 | `site/index.html`, `site/styles.css`, `site/app.js` | The dashboard |
 | `site/home-config.js` | Devices, TV apps, scenes, dim hours — edit this to change the dashboard |
 | `site/scenes.js` | Turns a scene into per-device on/off targets |
+| `worker/` | Cloudflare Worker ("cloud helper") that holds device keys and talks to Govee, Tuya and Alexa |
+| `docs/setup/` | Step-by-step setup guides |
 | `.github/workflows/pages.yml` | Publishes `site/` to GitHub Pages on every push to `main` |
 
 ## Run it locally
@@ -26,9 +28,10 @@ Then open http://localhost:8080.
 
 ## Demo mode
 
-Until the Cloudflare Worker exists (phase 2), the dashboard runs in demo mode: tiles and scenes
-change on screen only. Press and hold the clock to open settings and enter the Worker URL and
-access code later.
+Until the iPad has the cloud helper's URL and access code, the dashboard runs in demo mode: tiles
+and scenes change on screen only. Set up the helper with
+[docs/setup/cloud-helper.md](docs/setup/cloud-helper.md), then press and hold the clock to enter
+its URL and access code.
 
 ## Put it on the iPad
 

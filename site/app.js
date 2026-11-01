@@ -7,7 +7,8 @@ const deviceById = new Map(config.devices.map((d) => [d.id, d]));
 // Devices that can't report their own state (Alexa, Shortcuts) remember what we last told them.
 const LAST_SET_KEY = 'lastSet';
 const SETTINGS_KEY = 'settings';
-const POLL_MS = 5000;
+// The cloud helper caches Govee state for ~25s; Govee allows 10,000 calls a day.
+const POLL_MS = 30_000;
 
 const storage = {
   get(key, fallback) {
@@ -35,7 +36,7 @@ const demoBackend = {
   name: 'demo',
   async getState() { return null; },
   async setDevice() {},
-  async runScene() {},
+  async runScene() { return { failed: [], skipped: [] }; },
   async tv() {},
 };
 
@@ -47,14 +48,16 @@ function workerBackend(baseUrl, token) {
       headers: { Authorization: `Bearer ${token}`, ...(body && { 'Content-Type': 'application/json' }) },
       body: body && JSON.stringify(body),
     });
-    if (!res.ok) throw new Error(`Cloud helper returned ${res.status}`);
-    return res.status === 204 ? null : res.json();
+    if (res.status === 204) return null;
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error ?? `Cloud helper returned ${res.status}`);
+    return data;
   };
   return {
     name: 'worker',
     async getState() { return (await call('/state')).devices; },
     async setDevice(id, on) { await call(`/devices/${id}`, { on }); },
-    async runScene(id) { await call(`/scenes/${id}`, {}); },
+    async runScene(id) { return call(`/scenes/${id}`, {}); },
     async tv(action) { await call('/tv', action); },
   };
 }
@@ -138,7 +141,7 @@ function toast(message) {
   el.textContent = message;
   el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+  toastTimer = setTimeout(() => el.classList.remove('show'), Math.max(3000, message.length * 60));
 }
 
 /* ---------- Actions ---------- */
@@ -165,7 +168,7 @@ async function toggleDevice(id) {
     remember({ [id]: next });
   } catch (err) {
     state.on[id] = previous;
-    toast(`Couldn't reach ${device.name}`);
+    toast(err.message || `Couldn't reach ${device.name}`);
     console.error(err);
   } finally {
     state.pending.delete(id);
@@ -182,9 +185,14 @@ async function runScene(sceneId, button) {
   button.classList.add('busy');
   updateTiles();
   try {
-    await backend.runScene(sceneId);
+    const { failed } = await backend.runScene(sceneId);
     remember(targets);
-    toast(`${scene.name} scene on`);
+    if (failed.length) {
+      for (const { id } of failed) state.on[id] = previous[id];
+      toast(`${scene.name}: couldn't reach ${failed.map(({ id }) => deviceById.get(id).name).join(', ')}`);
+    } else {
+      toast(`${scene.name} scene on`);
+    }
     const shortcutDevice = Object.keys(targets)
       .map((id) => deviceById.get(id))
       .find((d) => d.via === 'shortcut');
@@ -207,7 +215,7 @@ async function tvAction(action, label) {
     updateTiles();
     toast(label);
   } catch (err) {
-    toast("Couldn't reach the Fire TV");
+    toast(err.message || "Couldn't reach the Fire TV");
     console.error(err);
   }
 }
