@@ -9,9 +9,10 @@
 import config from '../../site/home-config.js';
 import { resolveScene } from '../../site/scenes.js';
 import * as govee from './govee.js';
+import * as tuya from './tuya.js';
 
-// Filled in as each phase lands: tuya (phase 3), alexa (phase 4).
-const providers = { govee };
+// Filled in as each phase lands: alexa (phase 4).
+const providers = { govee, tuya };
 
 const deviceById = new Map(config.devices.map((d) => [d.id, d]));
 

@@ -6,6 +6,12 @@ compatibility_date = "2026-10-01"
 # Pages that may call the helper. The dashboard's access code is still required.
 ALLOWED_ORIGINS = "https://rohangandhi202.github.io,http://localhost:8080"
 
+# Small cache that survives Worker restarts, so Tuya's monthly API quota isn't spent re-fetching.
+[[kv_namespaces]]
+binding = "CACHE"
+id = "e73bf4a9a7d74cc1958790174c0eabcb"
+
 # Secrets (set with `npx wrangler secret put NAME`, never committed):
 #   DASHBOARD_TOKEN  the access code typed into the dashboard's settings
 #   GOVEE_API_KEY    from the Govee Home app
+#   TUYA_ACCESS_ID, TUYA_ACCESS_SECRET   from the Tuya cloud project (docs/setup/tuya.md)

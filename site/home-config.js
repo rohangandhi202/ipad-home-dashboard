@@ -14,7 +14,7 @@ export default {
   //   tuya     - Smart Life / Tuya cloud API (live on/off state)
   //   alexa    - Voice Monkey -> Alexa routine (no state; shows the last thing the dashboard did)
   //   shortcut - Siri Shortcut run on the iPad itself (no state)
-  // goveeName: the device's name in the Govee Home app, when it differs from `name`.
+  // goveeName / tuyaName: the device's name in the Govee or Smart Life app, when it differs from `name`.
   devices: [
     { id: 'desk-light', name: 'Desk light', type: 'light', icon: 'ti-bulb', via: 'govee', goveeName: 'Desk Lights' },
     { id: 'tv-light', name: 'TV light', type: 'light', icon: 'ti-device-tv', via: 'govee' },
