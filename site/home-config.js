@@ -14,15 +14,20 @@ export default {
   //   tuya     - Smart Life / Tuya cloud API (live on/off state)
   //   alexa    - Voice Monkey -> Alexa routine (no state; shows the last thing the dashboard did).
   //              `voiceMonkey` holds the Routine Trigger device IDs from app.voicemonkey.io.
-  //   shortcut - Siri Shortcut run on the iPad itself (no state)
+  //   shortcut - Siri Shortcut run on the iPad itself (no state). `shortcuts` names either an
+  //              on/off pair or a single `toggle`.
+  // scenes: false keeps a device out of every scene.
   // goveeName / tuyaName: the device's name in the Govee or Smart Life app, when it differs from `name`.
   devices: [
     { id: 'desk-light', name: 'Desk light', type: 'light', icon: 'ti-bulb', via: 'govee', goveeName: 'Desk Lights' },
     { id: 'tv-light', name: 'TV light', type: 'light', icon: 'ti-device-tv', via: 'govee' },
     { id: 'lamp', name: 'Lamp', type: 'light', icon: 'ti-lamp', via: 'tuya' },
     {
+      // Surplife only offers a "Quick Switch" toggle for Bluetooth lamps, so the dashboard can't
+      // know whether it's on, and scenes leave it alone rather than risk switching it the wrong way.
       id: 'sunset', name: 'Sunset lamp', type: 'light', icon: 'ti-sunset-2', via: 'shortcut',
-      shortcuts: { on: 'Sunset Lamp On', off: 'Sunset Lamp Off' },
+      shortcuts: { toggle: 'Sunset Lamp' },
+      scenes: false,
     },
     { id: 'plug-tv-stand', name: 'TV Stand', type: 'plug', icon: 'ti-plug', via: 'tuya' },
     { id: 'plug-desk', name: 'Desk', type: 'plug', icon: 'ti-plug', via: 'tuya' },

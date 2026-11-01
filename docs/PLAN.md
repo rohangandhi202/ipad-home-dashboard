@@ -7,7 +7,7 @@ A wall dashboard for an iPad Air 4 (iPadOS 26) that runs all day, with no extra 
 ```
 iPad (Home Screen web app, served by GitHub Pages)
  ├─ Open-Meteo ............................ weather (free, no key)
- ├─ shortcuts://run-shortcut .............. Surplife sunset lamp (Bluetooth, via a Siri Shortcut)
+ ├─ shortcuts://run-shortcut .............. Surplife sunset lamp (Bluetooth, toggle via a Siri Shortcut)
  └─ Cloudflare Worker (free) .............. holds every key, reports device state
      ├─ Govee API ......................... desk light, TV light (live state)
      ├─ Tuya cloud API .................... Smart Life lamp, TV Stand / Desk / Counter plugs (live state)
@@ -44,7 +44,8 @@ Defined in [`site/home-config.js`](../site/home-config.js); edit there.
 | All on | Every light and plug on |
 | All off | Everything off |
 
-Scenes that change the sunset lamp briefly open the Shortcuts app, then return to the dashboard.
+The sunset lamp isn't in any scene: Surplife only offers a toggle for Bluetooth lamps, so a scene
+can't be sure it's turning it off rather than on.
 
 ## Things to know
 

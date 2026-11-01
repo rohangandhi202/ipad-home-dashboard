@@ -9,6 +9,7 @@ export function resolveScene(config, sceneId) {
 
   const targets = {};
   for (const device of config.devices) {
+    if (device.scenes === false) continue;
     const group = Object.keys(TYPE_GROUPS).find((g) => TYPE_GROUPS[g] === device.type);
     const value = scene.set[device.id] ?? (group && scene.set[group]) ?? scene.set['*'];
     if (value) targets[device.id] = value === 'on';

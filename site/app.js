@@ -29,6 +29,11 @@ function hasLiveState(device) {
   return device.via === 'govee' || device.via === 'tuya';
 }
 
+// A device with only a toggle Shortcut can't be told "on" or "off", so it has no state at all.
+function isToggleOnly(device) {
+  return Boolean(device.shortcuts?.toggle);
+}
+
 /* ---------- Backends ---------- */
 
 // Demo mode: nothing leaves the iPad, so the layout can be tried before any accounts exist.
@@ -74,7 +79,7 @@ let backend = loadBackend();
 // Opening a shortcuts:// link hands the iPad to the Shortcuts app; each Shortcut ends by
 // opening the dashboard again. Only one can run per tap, so scenes use at most one.
 function runShortcut(device, on) {
-  const name = device.shortcuts?.[on ? 'on' : 'off'];
+  const name = device.shortcuts?.toggle ?? device.shortcuts?.[on ? 'on' : 'off'];
   if (!name || backend.name === 'demo') return;
   window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}`;
 }
@@ -85,7 +90,7 @@ function tileHtml(device) {
   return `
     <button class="tile" data-id="${device.id}" aria-pressed="false">
       <i class="ti ${device.icon}" aria-hidden="true"></i>
-      ${hasLiveState(device) ? '' : '<span class="tile-badge" title="Shows the last thing the dashboard did">last set</span>'}
+      ${hasLiveState(device) || isToggleOnly(device) ? '' : '<span class="tile-badge" title="Shows the last thing the dashboard did">last set</span>'}
       <span>
         <span class="tile-name">${device.name}</span><br>
         <span class="tile-state">Off</span>
@@ -124,6 +129,10 @@ function render() {
 function updateTiles() {
   for (const tile of document.querySelectorAll('.tile[data-id]')) {
     const id = tile.dataset.id;
+    if (isToggleOnly(deviceById.get(id))) {
+      tile.querySelector('.tile-state').textContent = 'Tap to switch';
+      continue;
+    }
     const on = state.on[id];
     tile.setAttribute('aria-pressed', String(on === true));
     tile.classList.toggle('pending', state.pending.has(id));
@@ -158,6 +167,10 @@ function remember(targets) {
 
 async function toggleDevice(id) {
   const device = deviceById.get(id);
+  if (isToggleOnly(device)) {
+    if (backend.name === 'demo') toast(`${device.name} runs its Shortcut once connected`);
+    return runShortcut(device);
+  }
   const next = !state.on[id];
   const previous = state.on[id];
 
